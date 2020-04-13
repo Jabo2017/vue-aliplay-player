@@ -224,7 +224,7 @@ export default {
 						this.$emit('play', _this.instance);
 					});
 					_this.instance.on('pause', () => {
-						if(document.getElementById(this.playerId)){
+						if (document.getElementById(this.playerId)) {
 							document.getElementById(this.playerId).getElementsByClassName('prism-big-play-btn')[0].style.display = 'block';
 						}
 						this.$emit('pause', _this.instance);
@@ -398,7 +398,7 @@ export default {
 			} else {
 				document.getElementById(this.playerId + 'm').style.backgroundImage = 'url(' + img + ')';
 			}
-			
+
 			this.addWaterMask();
 		},
 		/**
