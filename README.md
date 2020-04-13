@@ -13,6 +13,7 @@ npm i vue-aliplay-player -save
 ### import
 ```
 import player from 'vue-aliplay-player'
+import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 ```
 
 ### props
