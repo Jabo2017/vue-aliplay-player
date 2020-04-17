@@ -7,18 +7,32 @@ export default {
 	name: 'vue-aliplay-player',
 	props: {
 		playStyle: {
+			// 播放器样式：内联样式
 			type: String,
 			default: ''
 		},
 		aliplayerSdkPath: {
+			// 版本 sdk
 			type: String,
 			default: 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
 		},
 		autoplay: {
+			// 播放器是否自动播放
+			type: Boolean,
+			default: true
+		},
+		rePlay: {
+			// 播放器自动循环播放。
+			type: Boolean,
+			default: false
+		},
+		preload: {
+			// 播放器自动加载，目前仅h5可用。
 			type: Boolean,
 			default: true
 		},
 		isLive: {
+			// 是否直播模式
 			type: Boolean,
 			default: true
 		},
@@ -28,10 +42,12 @@ export default {
 			default: true
 		},
 		width: {
+			// 播放器宽度，可形如‘100%’或者‘100px’
 			type: String,
 			default: '100%'
 		},
 		height: {
+			// 播放器高度，可形如‘100%’或者‘100px’
 			type: String,
 			default: '320px'
 		},
@@ -41,43 +57,77 @@ export default {
 			default: 'hover'
 		},
 		useH5Prism: {
+			// 指定使用H5播放器。
 			type: Boolean,
 			default: false
 		},
 		useFlashPrism: {
+			// useFlashPrism
 			type: Boolean,
 			default: false
 		},
+		snapshot: {
+			// type: Boolean,
+			type: Boolean,
+			default: true
+		},
 		vid: {
+			// 媒体转码服务的媒体Id
 			type: String,
 			default: ''
 		},
 		playauth: {
+			// 播放权证
 			type: String,
 			default: ''
 		},
+		// 视频播放地址url：
+		// - 单独url。
+		// - 默认状态，表示使用vid+playauth。
+		// - source播放方式优先级最高。
+		// source支持多清晰度设置：
+		// source:'{"HD":"address1","SD":"address2"}'
 		source: {
 			type: String,
 			default: ''
 		},
+		// 播放器默认封面图片，请填写正确的图片url地址。
+		// 需要autoplay为’false’时，才生效。
 		cover: {
 			type: String,
 			default: ''
 		},
+		// // 显示播放时缓冲图标，默认true。
+		showBuffer: {
+			type: Boolean,
+			default: true
+		},
+		// H5播放flv时，设置是否启用播放缓存，只在直播下起作用。
+		enableStashBufferForFlv: {
+			type: Boolean,
+			default: true
+		},
+		// 指定播放地址格式，只有使用vid的播放方式时支持
+		// 可选值为’mp4’、’m3u8’、’flv’、’mp3’，默认为空，仅H5支持
 		format: {
 			type: String,
-			default: 'm3u8'
+			default: ''
 		},
+		// 播放器皮肤
+		// 暂未启用
 		skinLayout: {
 			type: Array,
 			default: function() {
 				return [];
 			}
 		},
+		// 声明视频播在界面上的位置，默认为“center”。
+		// 可选值为：“top”，“center”
 		x5_video_position: {
 			type: String,
-			default: 'top'
+			default: 'center'
 		},
+		// 声明启用同层H5播放器，启用时设置的值为‘h5’
 		x5_type: {
 			type: String,
 			default: 'h5'
@@ -86,15 +136,38 @@ export default {
 			type: Boolean,
 			default: false
 		},
+		// 延迟播放时间，单位为秒。
 		autoPlayDelay: {
 			type: Number,
 			default: 0
 		},
+		// 延迟播放提示文本
 		autoPlayDelayDisplayText: {
 			type: String,
 			default: '加载中...'
 		},
+		// H5设置截图水印
+		// snapshotWatermark:{
+		//     left:"100",
+		//     top:"100",
+		//     text:"测试水印",
+		//     font:"italic bold 48px 宋体",
+		//     strokeColor:"red",
+		//     fillColor:'green'
+		//   }
+		snapshotWatermark: {
+			type: Object,
+			default: () => {
+				return {};
+			}
+		},
+		// Safari浏览器可以启用Hls插件播放，Safari 11除外。
+		useHlsPluginForSafari: {
+			type: Boolean,
+			default: true
+		},
 		watermark: {
+			// 水印
 			type: Object,
 			default: () => {
 				return {
@@ -109,6 +182,11 @@ export default {
 					repeat: 'repeat' // 如果设置了repeat则position无效
 				};
 			}
+		},
+		fullAble: {
+			// 是否开启全屏设置模式
+			type: Boolean,
+			default: true
 		}
 	},
 	data() {
@@ -119,7 +197,6 @@ export default {
 					.toString(36)
 					.substr(2),
 			scriptTagStatus: 0,
-			isReload: false,
 			instance: null
 		};
 	},
@@ -172,6 +249,8 @@ export default {
 							id: _this.playerId,
 							autoplay: _this.autoplay,
 							isLive: _this.isLive,
+							rePlay: _this.rePlay,
+							preload: _this.preload,
 							playsinline: _this.playsinline,
 							format: _this.format,
 							width: _this.width,
@@ -179,17 +258,20 @@ export default {
 							controlBarVisibility: _this.controlBarVisibility,
 							useH5Prism: _this.useH5Prism,
 							useFlashPrism: _this.useFlashPrism,
-
 							vid: _this.vid,
 							playauth: _this.playauth,
 							source: source,
 							cover: _this.cover,
-
+							showBuffer: _this.showBuffer,
+							snapshot: _this.snapshot,
+							snapshotWatermark: _this.snapshotWatermark,
 							// skinLayout: _this.skinLayout, // 说明：功能组件布局配置，不传该字段使用默认布局传false隐藏所有功能组件，请参照皮肤定制
 							x5_video_position: _this.x5_video_position,
 							x5_type: _this.x5_type,
 							x5_fullscreen: _this.x5_fullscreen,
 							x5_orientation: _this.x5_orientation,
+							useHlsPluginForSafari: _this.useHlsPluginForSafari,
+							enableStashBufferForFlv: _this.enableStashBufferForFlv,
 							autoPlayDelay: _this.autoPlayDelay,
 							autoPlayDelayDisplayText: _this.autoPlayDelayDisplayText
 						},
@@ -206,6 +288,21 @@ export default {
 												player.play();
 											}
 										});
+
+								if (this.fullAble) {
+									document.getElementById(this.playerId) &&
+										document
+											.getElementById(this.playerId)
+											.getElementsByTagName('video')[0]
+											.addEventListener('dblclick', () => {
+												if (player.fullscreenService.getIsFullScreen()) {
+													this.cancelFull();
+												} else {
+													this.setFull();
+												}
+											});
+								}
+
 								if (_this.watermark.isShow) {
 									this.addWaterMask();
 								}
@@ -360,10 +457,46 @@ export default {
 		reloaduserPlayInfoAndVidRequestMts: function(vid, playauth) {
 			this.instance.reloaduserPlayInfoAndVidRequestMts(vid, playauth);
 		},
+		/**
+		 * @param {String} url
+		 * 重载播放器
+		 */
 		reloadPlayer: function(url) {
-			this.isReload = true;
 			this.initAliplayer(url);
-			this.isReload = false;
+		},
+		/**
+		 * 获取全屏状态
+		 * 仅H5支持
+		 */
+		getFullStatus() {
+			return this.instance.fullscreenService.getIsFullScreen();
+		},
+		/**
+		 * 设置全屏
+		 * 播放器全屏，仅H5支持。
+		 */
+		setFull() {
+			this.instance.fullscreenService.requestFullScreen();
+		},
+		/**
+		 * 取消全屏
+		 * 仅H5支持
+		 */
+		cancelFull() {
+			this.instance.fullscreenService.cancelFullScreen();
+		},
+		/**
+		 * 播放器销毁
+		 */
+		dispose() {
+			this.instance.dispose();
+		},
+		/**
+		 * @param {String} coverUrl
+		 * cover封面地址
+		 */
+		setCover(coverUrl) {
+			this.instance.setCover(coverUrl);
 		},
 		/**
 		 * 水印
@@ -413,9 +546,21 @@ export default {
 						this.instance.play();
 					}
 				});
+
+			if (this.fullAble) {
+				document.getElementById(this.playerId + 'm') &&
+					document.getElementById(this.playerId + 'm').addEventListener('dblclick', () => {
+						if (this.getFullStatus()) {
+							this.cancelFull();
+						} else {
+							this.setFull();
+						}
+					});
+			}
 		}
 	},
-	destroyed() {
+	beforeDestroy() {
+		this.dispose();
 		document.getElementById(this.playerId) &&
 			document
 				.getElementById(this.playerId)
