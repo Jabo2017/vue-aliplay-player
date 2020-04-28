@@ -201,6 +201,10 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @param {String} url
+		 * 加载播放器
+		 */
 		loadPlayer(url) {
 			if (window.Aliplayer !== undefined) {
 				// 如果全局对象存在，说明编辑器代码已经初始化完成，直接加载编辑器
@@ -211,6 +215,10 @@ export default {
 				this.insertScriptTag(url);
 			}
 		},
+		/**
+		 * @param {String} url
+		 * 插入脚本
+		 */
 		insertScriptTag(url) {
 			const _this = this;
 			let playerScriptTag = document.getElementById('playerScriptTag');
@@ -226,14 +234,24 @@ export default {
 			if (playerScriptTag.loaded) {
 				_this.scriptTagStatus++;
 			} else {
-				playerScriptTag.addEventListener('load', () => {
+				let loadReponse = function() {
 					_this.scriptTagStatus = 2;
 					playerScriptTag.loaded = true;
 					_this.initAliplayer(url);
-				});
+
+					if (playerScriptTag.loaded) {
+						playerScriptTag.removeEventListener('load', loadReponse);
+						playerScriptTag.loaded = false;
+					}
+				};
+				playerScriptTag.addEventListener('load', loadReponse);
 			}
 			_this.initAliplayer(url);
 		},
+		/**
+		 * @param {String} url
+		 * 初始化播放器
+		 */
 		initAliplayer(url) {
 			const _this = this;
 			let source = url ? url : this.source;
@@ -277,35 +295,7 @@ export default {
 						},
 						player => {
 							player.on('ready', () => {
-								document.getElementById(this.playerId) &&
-									document
-										.getElementById(this.playerId)
-										.getElementsByTagName('video')[0]
-										.addEventListener('click', () => {
-											if (player.getStatus() == 'playing' || player.getStatus() == 'ready') {
-												player.pause();
-											} else if (player.getStatus() == 'pause') {
-												player.play();
-											}
-										});
-
-								if (this.fullAble) {
-									document.getElementById(this.playerId) &&
-										document
-											.getElementById(this.playerId)
-											.getElementsByTagName('video')[0]
-											.addEventListener('dblclick', () => {
-												if (player.fullscreenService.getIsFullScreen()) {
-													this.cancelFull();
-												} else {
-													this.setFull();
-												}
-											});
-								}
-
-								if (_this.watermark.isShow) {
-									this.addWaterMask();
-								}
+								_this.readyResponse();
 							});
 
 							if (_this.watermark.isShow) {
@@ -364,6 +354,44 @@ export default {
 						_this.$emit('completeSeek', _this.instance);
 					});
 				});
+			}
+		},
+		/**
+		 * ready 注册事件
+		 */
+		readyResponse() {
+			document.getElementById(this.playerId) &&
+				document
+					.getElementById(this.playerId)
+					.getElementsByTagName('video')[0]
+					.addEventListener('click', this.changePlayStatu);
+
+			if (this.fullAble) {
+				document.getElementById(this.playerId) &&
+					document
+						.getElementById(this.playerId)
+						.getElementsByTagName('video')[0]
+						.addEventListener('dblclick', this.changeFullStatu);
+			}
+		},
+		/**
+		 * 播放暂停切换
+		 */
+		changePlayStatu() {
+			if (this.getStatus() == 'playing' || this.getStatus() == 'ready') {
+				this.pause();
+			} else if (this.getStatus() == 'pause') {
+				this.play();
+			}
+		},
+		/**
+		 * 全屏切换
+		 */
+		changeFullStatu() {
+			if (this.getFullStatus()) {
+				this.cancelFull();
+			} else {
+				this.setFull();
 			}
 		},
 		/**
@@ -538,36 +566,31 @@ export default {
 		 * 水印监听
 		 */
 		addWaterMask() {
-			document.getElementById(this.playerId + 'm') &&
-				document.getElementById(this.playerId + 'm').addEventListener('click', () => {
-					if (this.instance.getStatus() == 'playing' || this.instance.getStatus() == 'ready') {
-						this.instance.pause();
-					} else if (this.instance.getStatus() == 'pause') {
-						this.instance.play();
-					}
-				});
+			document.getElementById(this.playerId + 'm') && document.getElementById(this.playerId + 'm').addEventListener('click', this.changePlayStatu);
 
 			if (this.fullAble) {
-				document.getElementById(this.playerId + 'm') &&
-					document.getElementById(this.playerId + 'm').addEventListener('dblclick', () => {
-						if (this.getFullStatus()) {
-							this.cancelFull();
-						} else {
-							this.setFull();
-						}
-					});
+				document.getElementById(this.playerId + 'm') && document.getElementById(this.playerId + 'm').addEventListener('dblclick', this.changeFullStatu);
 			}
 		}
 	},
 	beforeDestroy() {
-		this.dispose();
 		document.getElementById(this.playerId) &&
 			document
 				.getElementById(this.playerId)
 				.getElementsByTagName('video')[0]
-				.removeEventListener('click');
+				.removeEventListener('click', this.changePlayStatu);
 
-		document.getElementById(this.playerId + 'm') && document.getElementById(this.playerId + 'm').removeEventListener('click');
+		document.getElementById(this.playerId) &&
+			document
+				.getElementById(this.playerId)
+				.getElementsByTagName('video')[0]
+				.removeEventListener('dbclick', this.changeFullStatu);
+
+		document.getElementById(this.playerId + 'm') && document.getElementById(this.playerId + 'm').removeEventListener('click', this.changePlayStatu);
+
+		document.getElementById(this.playerId + 'm') && document.getElementById(this.playerId + 'm').removeEventListener('dblclick', this.changeFullStatu);
+
+		this.dispose();
 	}
 };
 </script>
