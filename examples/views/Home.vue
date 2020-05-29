@@ -4,7 +4,7 @@
 
 		<vueAliplayer ref="player" />
 		
-		<button @click="setFull">全屏</button>
+		<button @click="setFull">全屏信息</button>
 	</div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
 	},
 	methods: {
 		player() {
-			this.$refs.player.loadPlayer('{"HD":"http://common.qupai.me/player/qupai.mp4","SD":"http://common.qupai.me/player/qupai.mp4"}');
+			this.$refs.player.loadPlayer('rtsp://36.250.11.97/live/0');
 		},
 		setFull(){
 			this.$refs.player.setFull();

@@ -256,7 +256,7 @@ export default {
 			const _this = this;
 			let source = url ? url : this.source;
 			// scriptTagStatus 为 2 的时候，说明两个必需引入的 js 文件都已经被引入，且加载完成
-			if (_this.scriptTagStatus === 2 && (_this.instance === null || _this.reloadPlayer)) {
+			if (_this.scriptTagStatus === 2 && source) {
 				_this.instance && _this.instance.dispose();
 				// document.querySelector("#" + _this.playerId).innerHTML = "";
 				// Vue 异步执行 DOM 更新，这样一来代码执行到这里的时候可能 template 里面的 script 标签还没真正创建
@@ -517,7 +517,7 @@ export default {
 		 * 播放器销毁
 		 */
 		dispose() {
-			this.instance.dispose();
+			this.instance && this.instance.dispose();
 		},
 		/**
 		 * @param {String} coverUrl
