@@ -2,7 +2,7 @@
 	<div class="home">
 		<img alt="Vue logo" src="../assets/logo.png" />
 
-		<vueAliplayer ref="player" />
+		<vueAliplayer ref="player"  :speedAble="false"/>
 		
 		<button @click="setFull">全屏信息</button>
 	</div>
@@ -26,7 +26,7 @@ export default {
 	},
 	methods: {
 		player() {
-			this.$refs.player.loadPlayer('rtsp://36.250.11.97/live/0');
+			this.$refs.player.loadPlayer('http://hls01open.ys7.com/openlive/847a2635381e4fc4b17a0f005711fd7f.m3u8');
 		},
 		setFull(){
 			this.$refs.player.setFull();

@@ -187,6 +187,11 @@ export default {
 			// 是否开启全屏设置模式
 			type: Boolean,
 			default: true
+		},
+		speedAble: {
+			// 是否开启倍数
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -372,6 +377,12 @@ export default {
 						.getElementById(this.playerId)
 						.getElementsByTagName('video')[0]
 						.addEventListener('dblclick', this.changeFullStatu);
+			}
+
+			if (!this.speedAble) {
+				if (document.getElementById(this.playerId) && document.getElementById(this.playerId).querySelector('.prism-setting-speed')) {
+					document.getElementById(this.playerId).querySelector('.prism-setting-speed').style.display = 'none';
+				}
 			}
 		},
 		/**

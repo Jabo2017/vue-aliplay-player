@@ -199,6 +199,11 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
   	// 是否开启全屏设置模式
   	type: Boolean,
   	default: true
+  },
+  speedAble: {
+  	// 是否开启倍数
+  	type: Boolean,
+  	default: false
   }
 
 ```
@@ -253,6 +258,9 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 > 21、setCover(coverUrl); // 设置封面
 
 ```
+
+### 版本说明
+1、2.0.3： 新增倍数开启关闭需求
 
 ### 参数配置参考
 [阿里云播放器配置](https://helpcdn.aliyun.com/document_detail/125572.html?spm=a2c4g.11186623.4.1.27961c4cl6VC7x)
