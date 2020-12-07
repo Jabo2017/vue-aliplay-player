@@ -121,6 +121,9 @@ export default {
 				return [];
 			}
 		},
+    extraInfo:{
+        "x5-playsinline":""
+    },
 		// 声明视频播在界面上的位置，默认为“center”。
 		// 可选值为：“top”，“center”
 		x5_video_position: {
@@ -129,8 +132,8 @@ export default {
 		},
 		// 声明启用同层H5播放器，启用时设置的值为‘h5’
 		x5_type: {
-			type: String,
-			default: 'h5'
+			// type: String,
+			// default: 'h5'
 		},
 		x5_fullscreen: {
 			type: Boolean,
@@ -291,6 +294,7 @@ export default {
 							// skinLayout: _this.skinLayout, // 说明：功能组件布局配置，不传该字段使用默认布局传false隐藏所有功能组件，请参照皮肤定制
 							x5_video_position: _this.x5_video_position,
 							x5_type: _this.x5_type,
+              extraInfo: _this.extraInfo,
 							x5_fullscreen: _this.x5_fullscreen,
 							x5_orientation: _this.x5_orientation,
 							useHlsPluginForSafari: _this.useHlsPluginForSafari,
