@@ -314,19 +314,19 @@ export default {
           );
           // 绑定事件，当 AliPlayer 初始化完成后，将编辑器实例通过自定义的 ready 事件交出去
           _this.instance.on('ready', () => {
-            console.log('ready');
+            // console.log('ready');
             this.$emit('ready', _this.instance);
           });
           _this.instance.on('playing', () => {
-            console.log('playing');
+            // console.log('playing');
             this.$emit('playing', _this.instance);
           });
           _this.instance.on('play', () => {
-            console.log('play');
+            // console.log('play');
             this.$emit('play', _this.instance);
           });
           _this.instance.on('pause', () => {
-            console.log('pause');
+            // console.log('pause');
             if (document.getElementById(this.playerId)) {
               document.getElementById(this.playerId).getElementsByClassName('prism-big-play-btn')[0].style.display = 'block';
             }
@@ -345,7 +345,7 @@ export default {
             this.$emit('hideBar', _this.instance);
           });
           _this.instance.on('waiting', () => {
-            console.log('waiting');
+            // console.log('waiting');
             this.$emit('waiting', _this.instance);
           });
           _this.instance.on('snapshoted', () => {
@@ -362,7 +362,7 @@ export default {
             _this.$emit('cancelFullScreen', _this.instance);
           });
           _this.instance.on('error', () => {
-            console.log('error');
+            // console.log('error');
             _this.$emit('error', _this.instance);
           });
           _this.instance.on('startSeek', () => {
