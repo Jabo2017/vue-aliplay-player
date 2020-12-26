@@ -14,7 +14,8 @@ export default {
     aliplayerSdkPath: {
       // 版本 sdk
       type: String,
-      default: 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
+      // default: 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
+      default:'https://g.alicdn.com/de/prismplayer/2.9.1/aliplayer-min.js'
     },
     autoplay: {
       // 播放器是否自动播放
@@ -619,8 +620,9 @@ export default {
 };
 </script>
 
+<!-- @import 'https://g.alicdn.com/de/prismplayer/2.8.2/skins/default/aliplayer-min.css'; -->
 <style lang="postcss">
-@import 'https://g.alicdn.com/de/prismplayer/2.8.2/skins/default/aliplayer-min.css';
+@import 'https://g.alicdn.com/de/prismplayer/2.9.1/skins/default/aliplayer-min.css';
 .prism-big-play-btn {
   left: 50% !important;
   bottom: 50% !important;
