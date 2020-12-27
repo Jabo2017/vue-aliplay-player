@@ -262,6 +262,7 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 ### 版本说明
 1、2.0.3： 新增倍数开启关闭需求
 2、2.0.4： 新增waiting、playing 状态
+3、2.0.5： 升级版本
 
 ### 参数配置参考
 [阿里云播放器配置](https://helpcdn.aliyun.com/document_detail/125572.html?spm=a2c4g.11186623.4.1.27961c4cl6VC7x)

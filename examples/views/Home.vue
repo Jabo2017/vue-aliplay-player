@@ -35,7 +35,7 @@ export default {
 			this.$refs.player.setFull();
 		},
     changeFlv(){
-      this.$refs.player.loadPlayer('http://localhost:8080/cyberplayer-demo.flv')
+      this.$refs.player.loadPlayer('http://192.168.1.5:8080/cyberplayer-demo.flv')
     },
     changeHLS(){
       this.$refs.player.loadPlayer('http://hls01open.ys7.com/openlive/847a2635381e4fc4b17a0f005711fd7f.m3u8')

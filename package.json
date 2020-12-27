@@ -1,6 +1,6 @@
 {
   "name": "vue-aliplay-player",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "author": "Jabo",
   "description": "基于阿里云播放器的vue扩展封装",
   "keyword": "vue player",
