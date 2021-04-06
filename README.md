@@ -26,7 +26,8 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
   aliplayerSdkPath: {
   	// 版本 sdk
   	type: String,
-  	default: 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
+  	// default: 'https://g.alicdn.com/de/prismplayer/2.9.1/aliplayer-min.js',  // 如果要使用flash版本时指定SDK
+		default: "https://g.alicdn.com/de/prismplayer/2.9.3/aliplayer-h5-min.js", // H5版本【默认】
   },
   autoplay: {
   	// 播放器是否自动播放
@@ -172,6 +173,11 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
   	default: () => {
   		return {};
   	}
+  },
+	waitingTimeout: {
+      // 最大缓冲超时时间，超过这个时间会有错误提示，默认：60秒。
+      type: Number,
+      default: 60,
   },
   // Safari浏览器可以启用Hls插件播放，Safari 11除外。
   useHlsPluginForSafari: {
