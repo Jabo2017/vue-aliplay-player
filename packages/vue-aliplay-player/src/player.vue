@@ -1,22 +1,54 @@
 <template>
-  <div class="prism-player" :id="playerId" :style="playStyle"></div>
+  <div :class="['prism-player-wrap', stretching ? stretching : '']">
+    <div
+      v-if="sourceFormat === 'flv'"
+      :key="playerId + 'flv'"
+      class="prism-player"
+      :id="playerId"
+      :style="playStyle"
+    ></div>
+    <div
+      v-else-if="sourceFormat === 'mp'"
+      :key="playerId + 'mp'"
+      class="prism-player"
+      :id="playerId"
+      :style="playStyle"
+    ></div>
+    <div
+      v-else
+      class="prism-player"
+      :key="playerId + 'm3u8'"
+      :id="playerId"
+      :style="playStyle"
+    ></div>
+  </div>
 </template>
 
 <script>
 export default {
   name: "vue-aliplay-player",
   props: {
-    playStyle: {
-      // 播放器样式：内联样式
-      type: String,
-      default: "",
-    },
     aliplayerSdkPath: {
       // 版本 sdk
       type: String,
       // default: 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
       // default:'https://g.alicdn.com/de/prismplayer/2.9.1/aliplayer-min.js'
       default: "https://g.alicdn.com/de/prismplayer/2.9.3/aliplayer-h5-min.js", // H5版本
+    },
+    defaultFormat: {
+      // 指定播放类型
+      type: String,
+      default: "", // flv、 mp、m3u8【默认空】
+    },
+    stretching: {
+      // 设置播放器缩放方式，缩放方式分为：
+      type: String,
+      default: "fill", // none:不缩放；uniform:添加黑边缩放； exactfit:改变宽高比缩到最大；fill:剪切并缩放到最大
+    },
+    playStyle: {
+      // 播放器样式：内联样式
+      type: String,
+      default: "",
     },
     autoplay: {
       // 播放器是否自动播放
@@ -209,9 +241,34 @@ export default {
       playerId: "aliplayer_" + Math.random().toString(36).substr(2),
       scriptTagStatus: 0,
       instance: null,
+      sourceFormat: "",
     };
   },
   methods: {
+    /**
+     * 检验播放格式
+     */
+    checkFormat(url) {
+      return new Promise((resolve) => {
+        let index = url.lastIndexOf(".");
+        let ext = url.substr(index + 1);
+        if (!this.defaultFormat) {
+          this.sourceFormat = ext;
+        } else {
+          this.sourceFormat = this.defaultFormat;
+        }
+        resolve(this.sourceFormat);
+      });
+    },
+    /**
+     * 生成播放器id，防止流切换缓存
+     */
+    createPlayerId() {
+      return new Promise((resolve) => {
+        this.playerId = "aliplayer_" + Math.random().toString(36).substr(2);
+        resolve(this.sourceFormat);
+      });
+    },
     /**
      * @param {String} url
      * 加载播放器
@@ -262,15 +319,16 @@ export default {
      * @param {String} url
      * 初始化播放器
      */
-    initAliplayer(url) {
+    async initAliplayer(url) {
+      this.dispose();
       let source = url ? url : this.source;
+      await this.checkFormat(source);
+      await this.createPlayerId();
       // scriptTagStatus 为 2 的时候，说明两个必需引入的 js 文件都已经被引入，且加载完成
       if (this.scriptTagStatus === 2 && source) {
-        this.dispose();
         // document.querySelector("#" + this.playerId).innerHTML = "";
         // Vue 异步执行 DOM 更新，这样一来代码执行到这里的时候可能 template 里面的 script 标签还没真正创建
         // 所以，我们只能在 nextTick 里面初始化 Aliplayer
-        console.log(this.instance);
         this.$nextTick(() => {
           this.instance = new window.Aliplayer(
             {
@@ -334,8 +392,6 @@ export default {
       }
     },
     handleReady() {
-      console.log('xxx')
-      this.abnormalVideoPlayer()
       this.$emit("ready", this.instance);
     },
     handlePlaying() {
@@ -409,16 +465,6 @@ export default {
       this.instance.off("error", this.handleError);
       this.instance.off("startSeek", this.handleStartSeek);
       this.instance.off("completeSeek", this.handleCompleteSeek);
-    },
-    /**
-     * 播放器异常处理，当不同流切换时存在多个播放器
-     */
-    abnormalVideoPlayer(){
-      const players = document.querySelectorAll(`#${this.playerId} video`)
-      for(let i = 1, len = players.length; i < len; i++){
-        let currentPlayer = players[i]
-        currentPlayer.parentNode.removeChild(currentPlayer)
-      }
     },
     /**
      * ready 注册事件
@@ -594,9 +640,10 @@ export default {
      * 播放器销毁
      */
     dispose() {
-      if(this.instance){
-        this.offHandle()
-        this.instance.dispose()
+      if (this.instance) {
+        this.pause();
+        this.offHandle();
+        this.instance.dispose();
       }
     },
     /**
@@ -699,6 +746,22 @@ export default {
   left: 50% !important;
   bottom: 50% !important;
   transform: translate(-32px, 32px);
+}
+
+.prism-player-wrap video {
+  object-fit: fill;
+}
+
+.prism-player-wrap.exactfit video {
+  object-fit: cover;
+}
+
+.prism-player-wrap.none video {
+  object-fit: none;
+}
+
+.prism-player-wrap.uniform video {
+  object-fit: contain;
 }
 
 .waterMakerBg {
