@@ -83,7 +83,7 @@ export default {
     height: {
       // 播放器高度，可形如‘100%’或者‘100px’
       type: String,
-      default: "320px",
+      default: "100%",
     },
     controlBarVisibility: {
       // 控制面板的实现，默认为‘hover’， 可选的值为：‘click’、‘hover’、‘always’。
