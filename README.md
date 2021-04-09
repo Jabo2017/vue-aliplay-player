@@ -292,3 +292,6 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 
 ### 参数配置参考
 [阿里云播放器配置](https://helpcdn.aliyun.com/document_detail/125572.html?spm=a2c4g.11186623.4.1.27961c4cl6VC7x)
+
+### 参与
+欢迎你在github中一起参与
