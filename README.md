@@ -18,15 +18,26 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 
 ### props
 ``` js
+  aliplayerSdkPath: {
+  	// 版本 sdk
+  	type: String,
+  	// default: 'https://g.alicdn.com/de/prismplayer/2.9.3/aliplayer-min.js',  // 如果要使用flash版本时指定SDK
+		default: "https://g.alicdn.com/de/prismplayer/2.9.3/aliplayer-h5-min.js", // H5版本【默认】
+  },
+	defaultFormat: {
+      // 指定播放类型
+      type: String,
+      default: "", // flv、 mp、m3u8【默认空】
+  },
+  stretching: {
+      // 设置播放器缩放方式，缩放方式分为：
+      type: String,
+      default: "fill", // none:不缩放；uniform:添加黑边缩放； exactfit:改变宽高比缩到最大；fill:剪切并缩放到最大
+  },
   playStyle: {
   	// 播放器样式：内联样式
   	type: String,
   	default: ''
-  },
-  aliplayerSdkPath: {
-  	// 版本 sdk
-  	type: String,
-  	default: 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
   },
   autoplay: {
   	// 播放器是否自动播放
@@ -173,6 +184,11 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
   		return {};
   	}
   },
+	waitingTimeout: {
+      // 最大缓冲超时时间，超过这个时间会有错误提示，默认：60秒。
+      type: Number,
+      default: 60,
+  },
   // Safari浏览器可以启用Hls插件播放，Safari 11除外。
   useHlsPluginForSafari: {
   	type: Boolean,
@@ -260,9 +276,22 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 ```
 
 ### 版本说明
-1、2.0.3： 新增倍数开启关闭需求
-2、2.0.4： 新增waiting、playing 状态
-3、2.0.5： 升级版本
+
+##### 3.0.0
+* 默认H5播放，取消flash，需flash支持需指定含flash SDK版本
+* 重构结构、新增播放器缩放、不同流切换资源回收
+
+##### 2.0.5
+* 修复播放异常
+
+##### 2.0.4
+* 新增waiting、playing 状态
+
+##### 2.0.3
+* 新增倍数开启关闭需求
 
 ### 参数配置参考
 [阿里云播放器配置](https://helpcdn.aliyun.com/document_detail/125572.html?spm=a2c4g.11186623.4.1.27961c4cl6VC7x)
+
+### 参与
+欢迎你在github中一起参与
