@@ -277,6 +277,9 @@ import 'vue-aliplay-player/lib/vue-aliplay-player.css'
 
 ### 版本说明
 
+##### 3.0.1
+* 视频容器默认100%
+
 ##### 3.0.0
 * 默认H5播放，取消flash，需flash支持需指定含flash SDK版本
 * 重构结构、新增播放器缩放、不同流切换资源回收
