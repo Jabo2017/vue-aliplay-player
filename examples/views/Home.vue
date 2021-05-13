@@ -2,7 +2,7 @@
 	<div class="home">
 		<img alt="Vue logo" src="../assets/logo.png" />
 
-		<vueAliplayer ref="player"  :speedAble="false"/>
+		<vueAliplayer ref="player" style="height: 300px;"  :speedAble="false"/>
 		
 		<button @click="setFull">全屏信息</button>
     <button @click="changeFlv">flv</button>
@@ -36,7 +36,8 @@ export default {
 			this.$refs.player.setFull();
 		},
     changeFlv(){
-      this.$refs.player.loadPlayer('http://192.168.110.22:8080/cyberplayer-demo.flv')
+      // this.$refs.player.loadPlayer('http://192.168.110.22:8080/cyberplayer-demo.flv')
+      this.$refs.player.loadPlayer('http://3xl9578272.qicp.vip:1555/live/201.flv')
     },
     changeHLS(){
       this.$refs.player.loadPlayer('http://hls01open.ys7.com/openlive/847a2635381e4fc4b17a0f005711fd7f.m3u8')
