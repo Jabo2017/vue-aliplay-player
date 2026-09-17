@@ -2,9 +2,19 @@
   "name": "vue-aliplay-player",
   "version": "4.0.0",
   "private": false,
+  "license": "MIT",
+  "author": "Jabo <jabo@users.noreply.github.com>",
   "type": "module",
   "packageManager": "pnpm@10.34.5",
   "description": "阿里云 Aliplayer 的 Vue 3 播放器组件封装（v4 for Vue 3，Vue 2 项目请使用 3.x）",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jabo2017/vue-aliplay-player.git"
+  },
+  "homepage": "https://jabo2017.github.io/vue-aliplay-player/",
+  "bugs": {
+    "url": "https://github.com/Jabo2017/vue-aliplay-player/issues"
+  },
   "keywords": [
     "vue",
     "vue3",

@@ -10,6 +10,7 @@
 - `license` prop：支持阿里云播放器 License 配置（SDK ≥2.28 必需）
 - `aliplayer` prop：注入构造器模式（npm 安装 `aliyun-aliplayer` 的用户，SSR / 严格 CSP 友好）
 - `source` 变化自动销毁重建播放器
+- 组件样式运行时自动注入，使用者无需 `import 'vue-aliplay-player/dist/*.css'`
 - vitest 单元测试 8 例
 - Vite 7 库构建（ES + UMD + d.ts，gzip ~3KB）
 
@@ -18,6 +19,7 @@
 - 默认 SDK 从 2.9.3（`de/prismplayer` 旧路径）升级到 **2.27.1**（`apsara-media-box` 新路径，免 License 的最后版本）
 - 构建工具从 vue-cli 4 / webpack 4 迁移到 Vite 7
 - `package.json` 补 `repository` / `homepage` / `keywords` / `exports` / `files`，`lib/` 产物移出版本控制
+- 样式从 SFC 内联改为 `src/style.css` + `?inline` 运行时注入，产物不再单独输出 `.css`
 
 ### 修复（继承自 3.x 的已知问题）
 

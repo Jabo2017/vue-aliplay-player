@@ -15,6 +15,7 @@ https://jabo2017.github.io/vue-aliplay-player/
 - 🔌 **双模式**：默认 CDN 懒加载；也可 npm 安装 `aliyun-aliplayer` 后通过 `aliplayer` prop 注入构造器（SSR / 严格 CSP 友好）
 - 📄 **License 就绪**：已购阿里云播放器 License？配 `license` prop + 指向 2.28+ SDK 地址即可
 - 🔔 **事件全转发**：ready / playing / pause / ended / error / timeupdate 等 16 个事件，事件名与 3.x 一致
+- 🎨 **样式自动注入**：容器 / 缩放 / 水印样式随组件注入，无需手动引 CSS
 - 🧪 **vitest 8 例单测**覆盖初始化、参数透传、事件转发、销毁重建
 
 ## 安装
@@ -24,6 +25,8 @@ npm install vue-aliplay-player
 ```
 
 `vue`（^3.2）为 peer dependency。
+
+组件自带样式（容器布局 / 缩放模式 / 水印层）在引入时自动注入，**无需额外 `import` CSS 文件**。
 
 ## 快速上手
 

@@ -419,33 +419,3 @@ onBeforeUnmount(() => {
   dispose()
 })
 </script>
-
-<style>
-.prism-player-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.prism-player-wrap video {
-  object-fit: fill;
-}
-.prism-player-wrap.exactfit video {
-  object-fit: cover;
-}
-.prism-player-wrap.none video {
-  object-fit: none;
-}
-.prism-player-wrap.uniform video {
-  object-fit: contain;
-}
-.prism-player-wrap .prism-big-play-btn {
-  left: 50% !important;
-  bottom: 50% !important;
-  transform: translate(-32px, 32px);
-}
-.vap-watermark {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-</style>
