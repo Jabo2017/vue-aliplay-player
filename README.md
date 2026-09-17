@@ -1,5 +1,9 @@
 # vue-aliplay-player
 
+[![npm version](https://img.shields.io/npm/v/vue-aliplay-player.svg)](https://www.npmjs.com/package/vue-aliplay-player)
+[![npm downloads](https://img.shields.io/npm/dm/vue-aliplay-player.svg)](https://www.npmjs.com/package/vue-aliplay-player)
+[![license](https://img.shields.io/npm/l/vue-aliplay-player.svg)](./LICENSE)
+
 阿里云 [Aliplayer](https://help.aliyun.com/document_detail/125570.html) 的 **Vue 3** 播放器组件封装。TypeScript 全类型、SDK CDN 懒加载（零依赖打包）、支持点播 / 直播 / vid+playauth / 截图水印 / License 接入。
 
 > **Vue 2 项目请使用 [3.x 版本](https://github.com/Jabo2017/vue-aliplay-player/tree/3.x)**（`npm i vue-aliplay-player@3`）。
