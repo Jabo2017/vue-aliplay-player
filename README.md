@@ -106,12 +106,12 @@ playerRef.value?.seek(30)
 ## 本地开发
 
 ```bash
-npm install
-npm run dev          # demo 页
-npm run typecheck    # vue-tsc
-npm test             # vitest
-npm run build        # 库产物（ES + UMD + d.ts）
-npm run build:demo   # Pages 演示页
+pnpm install
+pnpm dev          # demo 页
+pnpm typecheck    # vue-tsc
+pnpm test         # vitest
+pnpm build        # 库产物（ES + UMD + d.ts）
+pnpm build:demo   # Pages 演示页
 ```
 
 ## License
